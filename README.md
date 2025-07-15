@@ -1,24 +1,5 @@
-# README
+# Odin Flight Booker
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a Ruby on Rails application built as part of The Odin Project curriculum. It allows users to search for one-way flights, select a flight, and enter passenger information for booking.
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+[Link to the Odin Project assignment](https://www.theodinproject.com/lessons/ruby-on-rails-flight-booker)
