@@ -1,24 +1,28 @@
 <h1>New Booking</h1>
 
-<p>
-  <strong>Flight:</strong> <%= @flight.departure_airport.code %> to <%= @flight.arrival_airport.code %>
-  on <%= @flight.start_datetime.strftime("%Y-%m-%d at %H:%M") %> (<%= @flight.duration %> minutes)
-</p>
+<% if @flight %>
+  <p>
+    <strong>Flight:</strong> <%= @flight.departure_airport.code %> to <%= @flight.arrival_airport.code %>
+    on <%= @flight.start_datetime.strftime("%Y-%m-%d at %H:%M") %> (<%= @flight.duration %> minutes)
+  </p>
 
-<%= form_with model: @booking, local: true do |f| %>
-  <%= f.hidden_field :flight_id %>
-  <% @booking.passengers.each_with_index do |passenger, index| %>
-    <h3>Passenger <%= index + 1 %></h3>
-    <%= f.fields_for :passengers, passenger do |pf| %>
-      <div>
-        <%= pf.label :name %>
-        <%= pf.text_field :name %>
-      </div>
-      <div>
-        <%= pf.label :email %>
-        <%= pf.email_field :email %>
-      </div>
+  <%= form_with model: @booking, local: true do |f| %>
+    <%= f.hidden_field :flight_id, value: @flight.id %>
+    <% @booking.passengers.each_with_index do |passenger, index| %>
+      <h3>Passenger <%= index + 1 %></h3>
+      <%= f.fields_for :passengers, passenger do |pf| %>
+        <div>
+          <%= pf.label :name %>
+          <%= pf.text_field :name %>
+        </div>
+        <div>
+          <%= pf.label :email %>
+          <%= pf.email_field :email %>
+        </div>
+      <% end %>
     <% end %>
+    <%= f.submit "Create Booking" %>
   <% end %>
-  <%= f.submit "Create Booking" %>
+<% else %>
+  <p>No flight selected. Please <%= link_to "go back and select a flight", root_path %>.</p>
 <% end %>
