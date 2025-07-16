@@ -1,0 +1,55 @@
+<h1>Flight Search</h1>
+
+<%= form_with url: flights_path, method: :get, local: true do |f| %>
+  <div>
+    <%= f.label :departure_airport_id, "Departure Airport" %>
+    <%= f.collection_select :departure_airport_id, @airports, :id, :code %>
+  </div>
+  <div>
+    <%= f.label :arrival_airport_id, "Arrival Airport" %>
+    <%= f.collection_select :arrival_airport_id, @airports, :id, :code %>
+  </div>
+  <div>
+    <%= f.label :date, "Flight Date" %>
+    <%= f.select :date, options_for_select(@dates.map { |d| [d.strftime("%Y-%m-%d"), d] }) %>
+  </div>
+  <div>
+    <%= f.label :num_passengers, "Number of Passengers" %>
+    <%= f.select :num_passengers, options_for_select(@passenger_options) %>
+  </div>
+  <%= f.submit "Search Flights" %>
+<% end %>
+
+<% if @flights.any? %>
+  <h2>Available Flights</h2>
+  <%= form_with url: new_booking_path, method: :get, local: true do |f| %>
+    <%= f.hidden_field :num_passengers, value: @num_passengers %>
+    <table>
+      <thead>
+        <tr>
+          <th>Select</th>
+          <th>Flight ID</th>
+          <th>Departure</th>
+          <th>Arrival</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Duration</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @flights.each do |flight| %>
+          <tr>
+            <td><%= f.radio_button :flight_id, flight.id %></td>
+            <td><%= flight.id %></td>
+            <td><%= flight.departure_airport.code %></td>
+            <td><%= flight.arrival_airport.code %></td>
+            <td><%= flight.start_datetime.strftime("%Y-%m-%d") %></td>
+            <td><%= flight.start_datetime.strftime("%H:%M") %></td>
+            <td><%= flight.duration %> minutes</td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= f.submit "Select Flight" %>
+  <% end %>
+<% end %>
