@@ -1,0 +1,18 @@
+<h1>Booking Details</h1>
+
+<p>
+  <strong>Flight:</strong> <%= @booking.flight.departure_airport.code %> to <%= @booking.flight.arrival_airport.code %>
+  on <%= @booking.flight.start_datetime.strftime("%Y-%m-%d at %H:%M") %>
+  (<%= @booking.flight.duration %> minutes)
+</p>
+
+<h2>Passengers</h2>
+<ul>
+  <% @booking.passengers.each_with_index do |passenger, index| %>
+    <li>
+      <strong>Passenger <%= index + 1 %>:</strong> <%= passenger.name %> (<%= passenger.email %>)
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to "Back to Search", root_path %>
