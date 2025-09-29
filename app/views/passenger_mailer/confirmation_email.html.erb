@@ -1,0 +1,20 @@
+<!-- app/views/passenger_mailer/confirmation_email.html.erb -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Flight Booking Confirmation</h1>
+    <p>Dear <%= @passenger.name %>,</p>
+    <p>Thank you for booking with us! Here are your flight details:</p>
+    <ul>
+      <li>Flight Number: <%= @flight.flight_number %></li>
+      <li>Departure: <%= @flight.departure_airport %> at <%= @flight.departure_time %></li>
+      <li>Arrival: <%= @flight.arrival_airport %></li>
+      <li>Booking Reference: <%= @booking.id %></li>
+    </ul>
+    <p>Safe travels!</p>
+    <p>Best regards,<br>Flight Booker Team</p>
+  </body>
+</html>
