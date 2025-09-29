@@ -14,20 +14,16 @@ class BookingsController < ApplicationController
   end
 
   def create
-    puts "Create Params: #{params.inspect}" # Debug
     @booking = Booking.new(booking_params)
     if @booking.save
+      @booking.passengers.each do |passenger|
+        PassengerMailer.confirmation_email(passenger).deliver_later
+      end
       redirect_to @booking, notice: "Booking created successfully."
     else
-      # Set @flight from booking_params if possible
-      @flight = Flight.find(booking_params[:flight_id]) if booking_params[:flight_id].present?
-      @num_passengers = @booking.passengers.size
-      render :new, status: :unprocessable_entity
+      render :new
     end
-  rescue ActiveRecord::RecordNotFound
-    redirect_to root_path, alert: "Invalid flight selected."
   end
-
   def show
     @booking = Booking.find(params[:id])
   end
